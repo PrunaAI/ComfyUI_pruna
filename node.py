@@ -1,6 +1,5 @@
 import comfy.model_patcher
 
-
 try:
     from pruna import SmashConfig, smash
 except ImportError:
@@ -8,8 +7,8 @@ except ImportError:
 
 
 class SmashUnet:
-    @classmethod
 
+    @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
@@ -19,24 +18,31 @@ class SmashUnet:
 
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "apply_smashing"
-    CATEGORY = "loaders"  
+    CATEGORY = "loaders"
 
     def apply_smashing(self, model):
         '''
         Smash the model using Pruna.
         '''
+        # we assume that the input model is either a comfy.model_patcher.ModelPatcher
+        # or a comfy.model.Model
+        if isinstance(model, comfy.model_patcher.ModelPatcher):
+            smashed_patcher = model.clone()
+        else:
+            smashed_patcher = model.patcher
+            smashed_patcher = smashed_patcher.clone()
+
         # hardcode the config for now
         smash_config = SmashConfig()
         smash_config['compilers'] = ['x-fast']
 
-        smashed_model = smash(model.model, smash_config)
-        patch = comfy.model_patcher.ModelPatcher(
-            smashed_model,
-            load_device="cuda",
-            offload_device="cpu"
+        smashed_diffusion_model = smash(
+            smashed_patcher.model.diffusion_model,
+            smash_config
+        )
+        smashed_patcher.add_object_patch(
+            "diffusion_model",
+            smashed_diffusion_model._PrunaModel__model
         )
 
-        model_smashed = model.clone()
-        model_smashed.set_model_patch(patch, "smashed_unet")
-
-        return (model_smashed,)
+        return (smashed_patcher,)

@@ -1,6 +1,6 @@
 # Pruna AI ComfyUI Integration
 
-A custom node for ComfyUI that accelerates Stable Diffusion inference using [Pruna](https://docs.pruna.ai/en/latest/index.html).
+A custom node for ComfyUI that accelerates Stable Diffusion inference using [Pruna](https://docs.pruna.ai/en/latest/index.html). In its current form, the node applies only x-fast compilation.
 
 ## Installation
 
@@ -16,7 +16,13 @@ A custom node for ComfyUI that accelerates Stable Diffusion inference using [Pru
 
 The Pruna node will appear in the nodes menu under `loaders`.
 
-**Note**: For optimal performance, we recommend running ComfyUI with the `--gpu-only` flag.
+**Important note**: Current implementation relies on launching ComfyUI with the flag `--disable-cuda-malloc`, 
+otherwise, the node will not work. For optimal performance, we recommend also setting the 
+flag `--gpu-only`. These flags can be added when starting ComfyUI from the command line:
+```bash
+    python main.py --disable-cuda-malloc --gpu-only
+```
+
 
 ## Usage Example
 
