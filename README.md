@@ -20,7 +20,7 @@ The Pruna node will appear in the nodes menu under `loaders`.
 otherwise, the node will not work. For optimal performance, we recommend also setting the 
 flag `--gpu-only`. These flags can be added when starting ComfyUI from the command line:
 ```bash
-    python main.py --disable-cuda-malloc --gpu-only
+python main.py --disable-cuda-malloc --gpu-only
 ```
 
 
