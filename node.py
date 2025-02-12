@@ -13,6 +13,9 @@ class SmashUnet:
         return {
             "required": {
                 "model": ("MODEL",),
+            },
+            "optional": {
+                "compiler": ("STRING", {"default": "torch_compile"}),
             }
         }
 
@@ -20,7 +23,7 @@ class SmashUnet:
     FUNCTION = "apply_smashing"
     CATEGORY = "loaders"
 
-    def apply_smashing(self, model):
+    def apply_smashing(self, model, compiler):
         '''
         Smash the model using Pruna.
         '''
@@ -32,14 +35,15 @@ class SmashUnet:
             smashed_patcher = model.patcher
             smashed_patcher = smashed_patcher.clone()
 
-        # hardcode the config for now
+        # use the selected compiler
         smash_config = SmashConfig()
-        smash_config['compilers'] = ['x-fast']
-
+        smash_config['compilers'] = [compiler]
+    
         smashed_diffusion_model = smash(
             smashed_patcher.model.diffusion_model,
-            smash_config
+            smash_config,
         )
+
         smashed_patcher.add_object_patch(
             "diffusion_model",
             smashed_diffusion_model._PrunaModel__model
