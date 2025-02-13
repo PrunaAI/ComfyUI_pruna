@@ -6,7 +6,7 @@ except ImportError:
     print("pruna not installed, skip")
 
 
-class SmashUnet:
+class CompileModel:
 
     @classmethod
     def INPUT_TYPES(s):
@@ -21,7 +21,7 @@ class SmashUnet:
 
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "apply_smashing"
-    CATEGORY = "loaders"
+    CATEGORY = "Pruna"
 
     def apply_smashing(self, model, compiler):
         '''
@@ -35,7 +35,6 @@ class SmashUnet:
             smashed_patcher = model.patcher
             smashed_patcher = smashed_patcher.clone()
 
-        # use the selected compiler
         smash_config = SmashConfig()
         smash_config['compilers'] = [compiler]
     

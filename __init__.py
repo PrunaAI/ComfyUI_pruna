@@ -7,14 +7,14 @@ NODE_CLASS_MAPPINGS = {}
 NODE_DISPLAY_NAME_MAPPINGS = {}
 
 try:
-    from .node import SmashUnet
+    from .node import CompileModel
 
     PRUNA_NODE_CLASS_MAPPINGS = {
-        "SmashUnet": SmashUnet,
+        "CompileModel": CompileModel,
     }
 
     PRUNA_NODE_DISPLAY_NAME_MAPPINGS = {
-        "SmashUnet": "Smash Unet",
+        "CompileModel": "Pruna Compile",
     }
     NODE_CLASS_MAPPINGS.update(PRUNA_NODE_CLASS_MAPPINGS)
     NODE_DISPLAY_NAME_MAPPINGS.update(PRUNA_NODE_DISPLAY_NAME_MAPPINGS)
