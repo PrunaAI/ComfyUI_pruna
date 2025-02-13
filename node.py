@@ -15,7 +15,7 @@ class CompileModel:
                 "model": ("MODEL",),
             },
             "optional": {
-                "compiler": ("STRING", {"default": "torch_compile"}),
+                "compiler": ("STRING", {"default": "x-fast"}),
             }
         }
 
@@ -37,7 +37,8 @@ class CompileModel:
 
         smash_config = SmashConfig()
         smash_config['compilers'] = [compiler]
-    
+        smash_config._prepare_saving = False
+
         smashed_diffusion_model = smash(
             smashed_patcher.model.diffusion_model,
             smash_config,
