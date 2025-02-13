@@ -16,9 +16,9 @@ A custom node for ComfyUI that accelerates Stable Diffusion (SD) or Flux inferen
 
 The Pruna node will appear in the nodes menu in the `Pruna` category. 
 
-**Important note**: Current implementation relies on launching ComfyUI with the flag `--disable-cuda-malloc`, 
-otherwise, the node will not work. For optimal performance, we recommend also setting the 
-flag `--gpu-only`. These flags can be added when starting ComfyUI from the command line:
+**Important note**: The current implementation requires launching ComfyUI with the `--disable-cuda-malloc` flag; 
+otherwise the node may not function properly. For optimal performance, we also recommend setting the 
+`--gpu-only` flag. These flags can be added when starting ComfyUI from the command line:
 ```bash
 python main.py --disable-cuda-malloc --gpu-only
 ```
