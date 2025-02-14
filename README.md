@@ -64,6 +64,9 @@ as a guide. Note that in this example, we use the full regular version.
 
 ## Performance
 
-The node was tested on an NVIDIA L40S GPU. Below, we present a comparison of the performance between the compiled and uncompiled models, measured in iterations per second, as reported by `ComfyUI`.
+The node was tested on an NVIDIA L40S GPU. Below, we present a comparison of the performance between the compiled and uncompiled models.  
+- The first figure presents the performance in iterations per second, as reported by `ComfyUI`.
+- The second figure shows the end-to-end time required to generate a single image.
 
-![Performance](./images/performance.png)
+![Performance](./images/performance_its.png)
+![Performance](./images/performance_end2end.png)
