@@ -8,6 +8,7 @@ This repository contains a custom compilation node for ComfyUI that accelerates 
 1. Create a new conda environment with Python 3.10
 2. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
 3. Install the latest version of [Pruna](https://docs.pruna.ai/en/latest/setup/pip.html)
+4. Generate a Pruna token, following the instructions [here](https://docs.pruna.ai/en/latest/setup/token.html)
 
 ### Steps
 1. Navigate to your ComfyUI installation's `custom_nodes` folder
@@ -70,3 +71,9 @@ The node was tested on an NVIDIA L40S GPU. Below, we present a comparison of the
 
 ![Performance](./images/performance_its.png)
 ![Performance](./images/performance_end2end.png)
+
+## Contact
+
+For any questions or feedback, feel free to join our [Discord](https://discord.com/invite/Tun8YgzxZ9).
+We have a dedicated *help-desk* channel, and you're welcome to engage with our community. 
+
