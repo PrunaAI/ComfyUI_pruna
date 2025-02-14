@@ -1,6 +1,6 @@
-# Pruna AI ComfyUI Integration
+# Pruna nodes for ComfyUI
 
-A custom node for ComfyUI that accelerates Stable Diffusion (SD) or Flux inference using [Pruna](https://docs.pruna.ai/en/latest/index.html). In its current form, the node provide compilations capabilities. 
+This repository contains a custom compilation node for ComfyUI that accelerates Stable Diffusion (SD) and Flux inference using Pruna. 
 
 ## Installation
 
@@ -26,7 +26,7 @@ python main.py --disable-cuda-malloc --gpu-only
 
 ## Usage Example
 
-We provide two example workflows: one using an SD model and another based on flux. 
+We provide two example workflows: one using an SD model and another based on Flux. 
 
 To load the  workflow:
 - Drag and drop the provided `.json` file from the `workflows` folder into the ComfyUI window, or
@@ -62,3 +62,8 @@ as a guide. Note that in this example, we use the full regular version.
 
 ![Example Workflow](./images/flux.png)
 
+## Performance
+
+The node was tested on an NVIDIA L40S GPU. Below, we present a comparison of the performance between the compiled and uncompiled models, measured in iterations per second, as reported by `ComfyUI`.
+
+![Performance](./images/performance.png)
