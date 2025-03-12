@@ -42,7 +42,7 @@ otherwise the node may not function properly. For optimal performance, we also r
 We provide two example workflows: one using a [Stable Diffusion](#example-1-stable-diffusion) model and another based on [Flux](#example-2-flux). 
 
 To load the  workflow:
-- Drag and drop the provided json file (for [SD](/workflows/SD.json) or [Flux](/workflows/flux.json)) into the ComfyUI window
+- Drag and drop the provided json file (for [SD](/workflows/SD_compile.json) or [Flux](/workflows/flux_compile.json)) into the ComfyUI window
 - **OR** Click `Open` in the `Workflow` tab, as shown [here](./images/comfy_gui.png), and select the file
 
 Through the GUI, you can choose your preferred compilation mode. Currently, we support `x-fast` and `torch_compile`, with `x-fast` set as the default.
@@ -67,7 +67,7 @@ The node is tested using the SafeTensors format, so for the
 sake of reproducibility, we recommend using that format. 
 However, we don't expect any performance differences between the two.
 
-![Example Workflow](./images/SD.png)
+![Example Workflow](./images/SD_compile.png)
 
 **Note**: In this example, we use the [Stable Diffusion v1.4](https://huggingface.co/CompVis/stable-diffusion-v-1-4-original) model. However, our node is compatible with any other SD model —
 feel free to use your favorite one!
@@ -88,7 +88,7 @@ Get the [VAE](https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/
 You first need to request access to the model [here](https://huggingface.co/black-forest-labs/FLUX.1-dev). Once you have access, download the [weights](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/flux1-dev.safetensors) and move them to `<path_to_comfyui>/models/diffusion_models/`. 
 
 
-![Example Workflow](./images/flux.png)
+![Example Workflow](./images/flux_compile.png)
 
 ## Performance
 
