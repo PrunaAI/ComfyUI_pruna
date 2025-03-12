@@ -1,14 +1,15 @@
 import comfy.model_patcher
 
+USE_PRUNA_PRO = False
 try:
-    from pruna_pro.smash import smash
-    from pruna import SmashConfig
+    from pruna_pro import smash, SmashConfig
+    USE_PRUNA_PRO = True
 except ImportError:
-    print("prona not installed, skipping")
+    print("pruna_pro not installed, skipping")
     try:
-        from pruna.smash import smash, SmashConfig
+        from pruna import smash, SmashConfig
     except ImportError:
-        print("Neither prona nor pruna are installed, skip")
+        print("Neither pruna_pro nor pruna are installed, skipping")
 
 
 class CompileModel:
@@ -47,9 +48,11 @@ class CompileModel:
             smash_config,
         )
 
+        model_ref_name = "_PrunaProModel__internal_model_ref" if USE_PRUNA_PRO else "model"
+
         smashed_patcher.add_object_patch(
             "diffusion_model",
-            smashed_diffusion_model._PrunaProModel__internal_model_ref
+            smashed_diffusion_model.__getattribute__(model_ref_name)
         )
 
         return (smashed_patcher,)

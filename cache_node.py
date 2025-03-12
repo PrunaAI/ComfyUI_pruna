@@ -1,14 +1,13 @@
 import comfy.model_patcher
 
 try:
-    from pruna_pro.smash import smash
-    from pruna import SmashConfig
+    from pruna_pro import smash, SmashConfig
 except ImportError:
     print("pruna_pro not installed, skipping")
     try:
-        from pruna.smash import smash, SmashConfig
+        from pruna import smash, SmashConfig
     except ImportError:
-        print("Neither pruna_pro nor pruna are installed, skip")
+        print("Neither pruna_pro nor pruna are installed, skipping")
 
 
 class CacheModel:    
