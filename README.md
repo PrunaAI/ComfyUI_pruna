@@ -17,9 +17,9 @@ Here, you'll find:
 ### Prerequisites
 1. Create a new conda environment with Python 3.10
 2. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
-3. Install the latest version of [Pruna](https://docs.pruna.ai/en/latest/setup/pip.html) or Pruna Pro. 
+3. Install the latest version of [Pruna or Pruna Pro](https://docs.pruna.ai/en/latest/setup/pip.html).
 
-Note that the Pruna Pro version is required to use the caching node.
+Note that the Pruna Pro version is required to use the caching node or the `x_fast` compilation mode.
 
 ### Steps
 1. **Navigate to your ComfyUI installation's `custom_nodes` folder:**
@@ -78,7 +78,7 @@ You have two options for the base model:
 
 The node is tested using the SafeTensors format, so for the sake of reproducibility, we recommend using that format. However, we don't expect any performance differences between the two.
 
-After loading the model, you can [choose the workflow](#workflows) you want to apply, and you're all set!
+After loading the model, you can [choose the desired workflow](#workflows), and you're all set!
 
 **Note**: In this example, we use the [Stable Diffusion v1.4](https://huggingface.co/CompVis/stable-diffusion-v-1-4-original) model. However, our nodes are compatible with any other SD model — feel free to use your favorite one!
 
@@ -109,21 +109,35 @@ Through the GUI, you can configure various **optimization settings**. Specifical
   - **`threshold`**: Acceptable values range from `0.001` to `0.2`.  
   - **`max_skip_steps`**: Acceptable values range from `1` to `5`.  
 
-  We recommend using the default values (`threshold = 0.01`, `max_skip_steps = 4`), but you can experiment with different settings to balance speed and quality.
+  We recommend using the default values (`threshold = 0.01`, `max_skip_steps = 4`), but you can experiment with different settings to balance speed and quality. In general, increasing the threshold results in more aggressive caching, which may improve performance at the expense of image quality.
 
-> **Note**: Caching requires access to the Pruna Pro version
+> **Note**: Caching and `x_fast` compilation require access to the Pruna Pro version.
 
 
 
 ## Performance
 
-The node was tested on an NVIDIA L40S GPU. Below, we compare the performance of the base model, with the models compiled with Pruna's `x-fast` and `torch_compile` compilation modes. 
+The node was tested on an NVIDIA L40S GPU. Below, we compare the performance of the base model, with the models 
+optimized with Pruna's compilation and caching nodes. We run two types of experiments: one using 50 denoising steps and another 
+using 28 steps. We compare the iterations per second (as reported by `ComfyUI`) and the end-to-end time required to generate a single image.
 
-- The first figure presents the performance in iterations per second, as reported by `ComfyUI`.
-- The second figure shows the end-to-end time required to generate a single image.
 
-![Performance](./images/performance_its.png)
-![Performance](./images/performance_end2end.png)
+### 50 steps 
+
+![Performance](./images/its_comparison_50.png)
+![Performance](./images/end2end_time_comparison_50.png)
+
+**Hyperparameters**: For caching, we use the default hyperparameters, which are `threshold = 0.01` and `max_skip_steps = 4`.
+
+### 28 steps 
+
+![Performance](./images/its_comparison_28.png)
+![Performance](./images/end2end_time_comparison_28.png)
+
+**Hyperparameters**: For the SD model, when the number of denoising steps is small, the caching node with the 
+default hyperparameters tends to not provide substantial speedups. For that reason, here, only for 
+the SD model, we set the threshold to `0.02`. 
+
 
 ## Contact
 

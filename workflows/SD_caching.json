@@ -14,7 +14,7 @@
         120.31304931640625
       ],
       "flags": {},
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
@@ -52,7 +52,7 @@
         126.6060791015625
       ],
       "flags": {},
-      "order": 4,
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
@@ -90,7 +90,7 @@
         46
       ],
       "flags": {},
-      "order": 7,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
@@ -131,7 +131,7 @@
         58
       ],
       "flags": {},
-      "order": 8,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -192,7 +192,7 @@
         262
       ],
       "flags": {},
-      "order": 6,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
@@ -300,7 +300,7 @@
         82
       ],
       "flags": {},
-      "order": 3,
+      "order": 2,
       "mode": 0,
       "inputs": [
         {
@@ -325,42 +325,6 @@
       "widgets_values": [
         0.01,
         4
-      ]
-    },
-    {
-      "id": 20,
-      "type": "CompileModel",
-      "pos": [
-        -249.1147003173828,
-        -455.91925048828125
-      ],
-      "size": [
-        315,
-        58
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "CompileModel"
-      },
-      "widgets_values": [
-        "x-fast"
       ]
     }
   ],
@@ -450,10 +414,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.683013455365071,
+      "scale": 0.7513148009015786,
       "offset": [
-        737.6794349244985,
-        526.9385125669354
+        733.5545803378577,
+        454.0478145107456
       ]
     }
   },
