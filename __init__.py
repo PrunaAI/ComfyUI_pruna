@@ -7,14 +7,17 @@ NODE_CLASS_MAPPINGS = {}
 NODE_DISPLAY_NAME_MAPPINGS = {}
 
 try:
-    from .node import CompileModel
+    from .compile_node import CompileModel
+    from .cache_node import CacheModel
 
     PRUNA_NODE_CLASS_MAPPINGS = {
         "CompileModel": CompileModel,
+        "CacheModel": CacheModel,
     }
 
     PRUNA_NODE_DISPLAY_NAME_MAPPINGS = {
         "CompileModel": "Pruna Compile",
+        "CacheModel": "Pruna Cache",
     }
     NODE_CLASS_MAPPINGS.update(PRUNA_NODE_CLASS_MAPPINGS)
     NODE_DISPLAY_NAME_MAPPINGS.update(PRUNA_NODE_DISPLAY_NAME_MAPPINGS)
