@@ -109,7 +109,7 @@ Through the GUI, you can configure various **optimization settings**. Specifical
   - **`threshold`**: Acceptable values range from `0.001` to `0.2`.  
   - **`max_skip_steps`**: Acceptable values range from `1` to `5`.  
 
-  We recommend using the default values (`threshold = 0.01`, `max_skip_steps = 4`), but you can experiment with different settings to balance speed and quality. In general, increasing the threshold results in more aggressive caching, which may improve performance at the expense of image quality.
+  We recommend using the default values (`threshold = 0.01`, `max_skip_steps = 4`), but you can experiment with different settings to balance speed and quality. In general, increasing the threshold results in more aggressive caching, which may improve performance at the expense of image quality. Note that, if you want to change the hyperparameters after the first execution, you have to restart the workflow, for both nodes.
 
 > **Note**: Caching and `x_fast` compilation require access to the Pruna Pro version.
 
