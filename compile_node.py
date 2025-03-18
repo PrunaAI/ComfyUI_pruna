@@ -1,9 +1,15 @@
 import comfy.model_patcher
 
+USE_PRUNA_PRO = False
 try:
-    from pruna import SmashConfig, smash
+    from pruna_pro import smash, SmashConfig
+    USE_PRUNA_PRO = True
 except ImportError:
-    print("pruna not installed, skip")
+    print("pruna_pro not installed, skipping")
+    try:
+        from pruna import smash, SmashConfig
+    except ImportError:
+        print("Neither pruna_pro nor pruna are installed, skipping")
 
 
 class CompileModel:
@@ -13,17 +19,15 @@ class CompileModel:
         return {
             "required": {
                 "model": ("MODEL",),
-            },
-            "optional": {
-                "compiler": ("STRING", {"default": "x-fast"}),
+                "compiler": ("STRING", {"default": "x_fast"}),
             }
         }
 
     RETURN_TYPES = ("MODEL",)
-    FUNCTION = "apply_smashing"
+    FUNCTION = "apply_compilation"
     CATEGORY = "Pruna"
 
-    def apply_smashing(self, model, compiler):
+    def apply_compilation(self, model, compiler):
         '''
         Smash the model using Pruna.
         '''
@@ -36,7 +40,7 @@ class CompileModel:
             smashed_patcher = smashed_patcher.clone()
 
         smash_config = SmashConfig()
-        smash_config['compilers'] = [compiler]
+        smash_config['compiler'] = compiler
         smash_config._prepare_saving = False
 
         smashed_diffusion_model = smash(
@@ -44,9 +48,11 @@ class CompileModel:
             smash_config,
         )
 
+        model_ref_name = "_PrunaProModel__internal_model_ref" if USE_PRUNA_PRO else "model"
+
         smashed_patcher.add_object_patch(
             "diffusion_model",
-            smashed_diffusion_model._PrunaModel__model
+            smashed_diffusion_model.__getattribute__(model_ref_name)
         )
 
         return (smashed_patcher,)
