@@ -1,7 +1,7 @@
 [project]
 name = "pruna"
-description = "This repository explains how to accelerate image generation in ComfyUI using Pruna, an inference optimization engine that makes AI models faster, smaller, cheaper, and greener. ComfyUI is a popular node-based GUI for image generation models, for which we provide a custom compilation node that accelerates Stable Diffusion (SD) and Flux inference, while preserving output quality."
-version = "1.0.0"
+description = "Nodes that integrate Pruna's functionalities into ComfyUI."
+version = "0.0.2"
 license = {file = "LICENSE"}
 
 [project.urls]
@@ -9,6 +9,6 @@ Repository = "https://github.com/PrunaAI/ComfyUI_pruna"
 #  Used by Comfy Registry https://comfyregistry.org
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "prunaai"
 DisplayName = "ComfyUI_pruna"
 Icon = ""
