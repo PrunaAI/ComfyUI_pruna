@@ -1,5 +1,5 @@
-import traceback
 import sys
+import traceback
 
 NODE_CLASS_MAPPINGS = {}
 
@@ -7,8 +7,8 @@ NODE_CLASS_MAPPINGS = {}
 NODE_DISPLAY_NAME_MAPPINGS = {}
 
 try:
-    from .compile_node import CompileModel
     from .cache_node import CacheModel
+    from .compile_node import CompileModel
 
     PRUNA_NODE_CLASS_MAPPINGS = {
         "CompileModel": CompileModel,
@@ -21,10 +21,9 @@ try:
     }
     NODE_CLASS_MAPPINGS.update(PRUNA_NODE_CLASS_MAPPINGS)
     NODE_DISPLAY_NAME_MAPPINGS.update(PRUNA_NODE_DISPLAY_NAME_MAPPINGS)
-except Exception as e:
+except Exception:
     print("ComfyUI_pruna: Pruna node import failed.")
     traceback.print_exception(*sys.exc_info())
 
 if len(NODE_CLASS_MAPPINGS) == 0:
     raise Exception("import failed")
-
