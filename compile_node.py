@@ -49,7 +49,7 @@ class CompileModel:
         try: 
             smash_config['compiler'] = compiler
         except KeyError:
-            print(f"Compiler {compiler} is available only with pruna_pro")
+            raise ValueError(f"Compiler {compiler} is available only with pruna_pro")
 
         
         smash_config._prepare_saving = False
