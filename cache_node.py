@@ -66,8 +66,7 @@ class CacheModel:
         try:     
             smash_config['cachers'] = 'adaptive'
         except KeyError:
-            print("Adaptive caching requires pruna_pro to be installed")
-            raise 
+            raise KeyError("Adaptive caching requires pruna_pro to be installed")
 
         smash_config['adaptive_threshold'] = threshold
         smash_config['adaptive_max_skip_steps'] = max_skip_steps
