@@ -18,6 +18,12 @@ Here, you'll find:
 1. Create a new conda environment
 2. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI/?tab=readme-ov-file#installing)
 3. Install the latest version of [Pruna or Pruna Pro](https://docs.pruna.ai/en/stable/setup/pip.html)
+4. For Pruna Pro, after [requesting a token](https://docs.pruna.ai/en/stable/setup/pip.html#installing-pruna-pro), you should export the token as an environment variable:
+
+```bash
+export PRUNA_TOKEN=<your_token_here>
+```
+
 
 > **Note:** *Pruna Pro is required* to use the caching node or the `x_fast` compilation mode.
 
