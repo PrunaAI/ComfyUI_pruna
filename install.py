@@ -34,7 +34,8 @@ def ask_choice(prompt, choices, default=None):
         [f"[{c}]" if c == default else c for c in choices]
     )
     while True:
-        response = input(f"{prompt} ({choices_str}): ").strip().lower()
+        print(f"{prompt} ({choices_str}): ", end="", flush=True)
+        response = input().strip().lower()
         if not response and default:
             return default
         if response in choices:
@@ -56,4 +57,4 @@ if __name__ == "__main__":
     else:
         install("pruna[stable-fast]")
         if pkg == "pruna_pro":
-            install("pruna_pro")
+            install("pruna_pro)"
