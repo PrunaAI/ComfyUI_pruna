@@ -15,7 +15,7 @@ Here, you'll find:
 ## Installation
 
 ### Prerequisites
-1. Create a new conda environment
+1. Create a conda environment
 2. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI/?tab=readme-ov-file#installing)
 3. Install the latest version of [Pruna or Pruna Pro](https://docs.pruna.ai/en/stable/setup/pip.html)
 
