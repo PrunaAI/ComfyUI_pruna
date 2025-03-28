@@ -26,6 +26,7 @@ class CompileModel:
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "apply_compilation"
     CATEGORY = "Pruna"
+    SUPPORTED_COMPILERS = {"x_fast", "torch_compile", "x-fast"} # x-fast is deprecated, but still supported
 
     def apply_compilation(self, model, compiler):
         '''
@@ -40,9 +41,18 @@ class CompileModel:
             smashed_patcher = smashed_patcher.clone()
 
         smash_config = SmashConfig()
-        smash_config['compiler'] = compiler
-        smash_config._prepare_saving = False
 
+
+        if compiler not in self.SUPPORTED_COMPILERS:    
+            raise ValueError(f"Compiler {compiler} is not a valid compiler. Supported compilers are: {self.SUPPORTED_COMPILERS}")
+
+        try: 
+            smash_config['compiler'] = compiler
+        except KeyError:
+            print(f"Compiler {compiler} is available only with pruna_pro")
+
+        
+        smash_config._prepare_saving = False
         smashed_diffusion_model = smash(
             smashed_patcher.model.diffusion_model,
             smash_config,
