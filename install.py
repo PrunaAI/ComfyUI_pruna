@@ -34,7 +34,8 @@ def ask_choice(prompt, choices, default=None):
         [f"[{c}]" if c == default else c for c in choices]
     )
     while True:
-        response = input(f"{prompt} ({choices_str}): ").strip().lower()
+        print(f"{prompt} ({choices_str}): ", end="", flush=True)
+        response = input().strip().lower()
         if not response and default:
             return default
         if response in choices:
@@ -45,15 +46,10 @@ if __name__ == "__main__":
     # Ask the user which package to install
     pkg = ask_choice("Which package do you want to use?", ["pruna", "pruna_pro"], default="pruna")
 
-    # Ask for CPU or GPU version
-    hardware = ask_choice("For which hardware do you want to install the package?", ["gpu", "cpu"], default="gpu")
-    extra_index_url = "https://download.pytorch.org/whl/cpu" if hardware == "cpu" else None
+    print(f"\nInstalling: {pkg} ...")
+    
+    # install stable-fast in any case 
+    install("pruna[stable-fast]")
 
-
-    print(f"\nInstalling: {pkg} for {hardware} ...")
-    if hardware == "cpu":
-        install(pkg, extra_index_url)
-    else:
-        install("pruna[stable-fast]")
-        if pkg == "pruna_pro":
-            install("pruna_pro")
+    if pkg == "pruna_pro":
+        install("pruna_pro")
