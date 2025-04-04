@@ -46,15 +46,10 @@ if __name__ == "__main__":
     # Ask the user which package to install
     pkg = ask_choice("Which package do you want to use?", ["pruna", "pruna_pro"], default="pruna")
 
-    # Ask for CPU or GPU version
-    hardware = ask_choice("For which hardware do you want to install the package?", ["gpu", "cpu"], default="gpu")
-    extra_index_url = "https://download.pytorch.org/whl/cpu" if hardware == "cpu" else None
+    print(f"\nInstalling: {pkg} ...")
+    
+    # install stable-fast in any case 
+    install("pruna[stable-fast]")
 
-
-    print(f"\nInstalling: {pkg} for {hardware} ...")
-    if hardware == "cpu":
-        install(pkg, extra_index_url)
-    else:
-        install("pruna[stable-fast]")
-        if pkg == "pruna_pro":
-            install("pruna_pro)"
+    if pkg == "pruna_pro":
+        install("pruna_pro")
