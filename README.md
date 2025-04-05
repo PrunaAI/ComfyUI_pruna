@@ -15,11 +15,22 @@ Here, you'll find:
 ## Installation
 
 ### Prerequisites
-1. Create a new conda environment with Python 3.10
-2. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
-3. Install the latest version of [Pruna or Pruna Pro](https://docs.pruna.ai/en/latest/setup/pip.html).
+1. Create a conda environment
+2. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI/?tab=readme-ov-file#installing)
+3. Install the latest version of [Pruna or Pruna Pro](https://docs.pruna.ai/en/stable/setup/pip.html)
 
-Note that the Pruna Pro version is required to use the caching node or the `x_fast` compilation mode.
+**To use Pruna Pro**, you also need to: 
+1. [Request a token](https://docs.pruna.ai/en/stable/setup/pip.html#installing-pruna-pro), and export it as an environment variable:
+```bash
+export PRUNA_TOKEN=<your_token_here>
+```
+2. [*Optional*] If you want to use the `x-fast` compiler, you need to install additional dependencies:
+```bash
+pip install pruna[stable-fast]
+``` 
+
+
+> **Note:** *Pruna Pro is required* to use the caching node or the `x_fast` compilation mode.
 
 ### Steps
 1. **Navigate to your ComfyUI installation's `custom_nodes` folder:**
