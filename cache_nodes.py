@@ -1,34 +1,29 @@
 import comfy.model_patcher
 
 try:
-    from pruna_pro import smash, SmashConfig
+    from pruna_pro import SmashConfig, smash
 except ImportError:
     print("pruna_pro not installed, skipping")
     try:
-        from pruna import smash, SmashConfig
+        from pruna import SmashConfig, smash
     except ImportError:
         print("Neither pruna_pro nor pruna are installed, skipping")
 
 
-class CacheModel:    
-
+class CacheModelAdaptive:
     @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
-                "model": ("MODEL",),               
-                "threshold": ("FLOAT", {
-                    "default": 0.01,
-                    "step": 0.001,
-                    "min": 0.001,
-                    "max": 0.2
-                }),
-                "max_skip_steps": ("INT", {
-                    "default": 4,
-                    "step": 1,
-                    "min": 1,
-                    "max": 5
-                }),
+                "model": ("MODEL",),
+                "threshold": (
+                    "FLOAT",
+                    {"default": 0.01, "step": 0.001, "min": 0.001, "max": 0.2},
+                ),
+                "max_skip_steps": (
+                    "INT",
+                    {"default": 4, "step": 1, "min": 1, "max": 5},
+                ),
             }
         }
 
@@ -39,7 +34,7 @@ class CacheModel:
         #   - https://github.com/comfyanonymous/ComfyUI/issues/1962#issuecomment-1809574013
         #   - https://github.com/comfyanonymous/ComfyUI/issues/2024
         return float("nan")
-    
+
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "apply_caching"
     CATEGORY = "Pruna"
@@ -50,7 +45,7 @@ class CacheModel:
         Modify forward pass of the model to use adaptive caching.
         """
 
-        if self.reset_cache:            
+        if self.reset_cache:
             model.model.cache_helper.reset_cache()
             return (model,)
 
@@ -63,13 +58,13 @@ class CacheModel:
         # set up the smash config
         smash_config = SmashConfig()
 
-        try:     
-            smash_config['cachers'] = 'adaptive'
+        try:
+            smash_config["cachers"] = "adaptive"
         except KeyError:
             raise ValueError("Adaptive caching requires pruna_pro to be installed")
 
-        smash_config['adaptive_threshold'] = threshold
-        smash_config['adaptive_max_skip_steps'] = max_skip_steps
+        smash_config["adaptive_threshold"] = threshold
+        smash_config["adaptive_max_skip_steps"] = max_skip_steps
 
         # smash the model
         smashed_model = smash(smashed_patcher.model, smash_config)
@@ -79,3 +74,23 @@ class CacheModel:
         self.reset_cache = True
 
         return (smashed_patcher,)
+
+
+class CacheModelPeriodic:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "model": ("MODEL",),
+            }
+        }
+
+    def apply_caching(self, model):
+        pass
+
+    RETURN_TYPES = ("MODEL",)
+    FUNCTION = "apply_caching"
+    CATEGORY = "Pruna"
+
+    def apply_caching(self, model):
+        pass
