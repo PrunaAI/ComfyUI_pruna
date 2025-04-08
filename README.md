@@ -17,7 +17,16 @@ Here, you'll find:
 ### Prerequisites
 1. Create a conda environment
 2. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI/?tab=readme-ov-file#installing)
-3. Install the latest version of [Pruna or Pruna Pro](https://docs.pruna.ai/en/stable/setup/pip.html)
+3. Install [Pruna or Pruna Pro](https://docs.pruna.ai/en/stable/setup/pip.html) version `0.2.0`.
+
+- To install **Pruna**:
+  ```bash
+  pip install pruna==0.2.0
+  ```
+- To install **Pruna Pro**:
+  ```bash
+  pip install pruna_pro==0.2.0
+  ```
 
 **To use Pruna Pro**, you also need to: 
 1. [Request a token](https://docs.pruna.ai/en/stable/setup/pip.html#installing-pruna-pro), and export it as an environment variable:
@@ -26,7 +35,7 @@ export PRUNA_TOKEN=<your_token_here>
 ```
 2. [*Optional*] If you want to use the `x-fast` compiler, you need to install additional dependencies:
 ```bash
-pip install pruna[stable-fast]
+pip install pruna[stable-fast]==0.2.0
 ``` 
 
 
