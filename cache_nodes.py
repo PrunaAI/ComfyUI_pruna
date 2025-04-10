@@ -10,17 +10,16 @@ except ImportError:
         print("Neither pruna_pro nor pruna are installed, skipping")
 
 
-# Base mixin that contains the common functionality
 class CacheModelMixin:
     def _clone_patcher(self, model):
         """Clone the model patcher from a given model instance."""
         if isinstance(model, comfy.model_patcher.ModelPatcher):
             return model.clone()
         else:
-            # Assume model has a .patcher attribute, then clone it.
+            # model is a BaseModel
             return model.patcher.clone()
 
-    def _apply_common_caching(self, model, caching_type, config_params, error_message):
+    def _apply_common_caching(self, model, caching_method, hyperparams):
         """
         Apply common caching steps:
            - Clone the model patcher.
@@ -28,31 +27,34 @@ class CacheModelMixin:
            - Update config with caching-specific parameters.
            - Smash and patch the model.
         """
-        patched = self._clone_patcher(model)
+        model_patcher = self._clone_patcher(model)
 
         # Set up the smash configuration object
         smash_config = SmashConfig()
 
         try:
-            smash_config["cachers"] = caching_type
+            smash_config["cachers"] = caching_method
         except KeyError:
-            raise ValueError(error_message)
+            raise ValueError(
+                f"{caching_method} caching requires pruna_pro to be installed"
+            )
 
         # Merge the given caching-specific parameters into the config
-        for key, value in config_params.items():
+        for key, value in hyperparams.items():
             smash_config[key] = value
+        smash_config._prepare_saving = False
 
         # add an attribute to patched to pass the info that it is a comfy model
-        patched.model.diffusion_model.is_comfy = True
+        model_patcher.model.diffusion_model.is_comfy = True
 
         # "Smash" the model and update the internal reference
-        smashed_model = smash(patched.model.diffusion_model, smash_config)
-        model_ref_name = "_PrunaProModel__internal_model_ref"
-        patched.add_object_patch(
-            "diffusion_model", smashed_model.__getattribute__(model_ref_name)
+        smashed_model = smash(model_patcher.model.diffusion_model, smash_config)
+        model_patcher.add_object_patch(
+            "diffusion_model",
+            smashed_model.__getattribute__("_PrunaProModel__internal_model_ref"),
         )
 
-        return patched
+        return model_patcher
 
 
 # CacheModelAdaptive now simply supplies its specific config parameters
@@ -70,6 +72,13 @@ class CacheModelAdaptive(CacheModelMixin):
                     "INT",
                     {"default": 4, "step": 1, "min": 1, "max": 5},
                 ),
+                "compiler": (
+                    "STRING",
+                    {
+                        "default": "torch_compile",
+                        "options": ["torch_compile", "none"],
+                    },
+                ),
             }
         }
 
@@ -77,20 +86,21 @@ class CacheModelAdaptive(CacheModelMixin):
     FUNCTION = "apply_caching"
     CATEGORY = "Pruna"
 
-    def apply_caching(self, model, threshold, max_skip_steps):
+    def apply_caching(self, model, threshold, max_skip_steps, compiler):
         # Prepare caching-specific configuration
-        config_params = {
+        hyperparams = {
             "adaptive_threshold": threshold,
             "adaptive_max_skip_steps": max_skip_steps,
         }
-        patched = self._apply_common_caching(
+        if compiler != "none":
+            hyperparams["compiler"] = compiler
+        model_patcher = self._apply_common_caching(
             model,
-            caching_type="adaptive",
-            config_params=config_params,
-            error_message="Adaptive caching requires pruna_pro to be installed",
+            caching_method="adaptive",
+            hyperparams=hyperparams,
         )
 
-        return (patched,)
+        return (model_patcher,)
 
 
 # CacheModelPeriodic also supplies its own configuration parameters
@@ -106,6 +116,13 @@ class CacheModelPeriodic(CacheModelMixin):
                     "STRING",
                     {"default": "default", "options": ["default", "taylor"]},
                 ),
+                "compiler": (
+                    "STRING",
+                    {
+                        "default": "torch_compile",
+                        "options": ["torch_compile", "none"],
+                    },
+                ),
             }
         }
 
@@ -113,50 +130,59 @@ class CacheModelPeriodic(CacheModelMixin):
     FUNCTION = "apply_caching"
     CATEGORY = "Pruna"
 
-    def apply_caching(self, model, cache_interval, start_step, cache_mode):
+    def apply_caching(self, model, cache_interval, start_step, cache_mode, compiler):
         # Prepare caching-specific configuration
-        config_params = {
+        hyperparams = {
             "periodic_cache_interval": cache_interval,
             "periodic_start_step": start_step,
             "periodic_cache_mode": cache_mode,
         }
-        patched = self._apply_common_caching(
+        if compiler != "none":
+            hyperparams["compiler"] = compiler
+        model_patcher = self._apply_common_caching(
             model,
-            caching_type="periodic",
-            config_params=config_params,
-            error_message="Periodic caching requires pruna_pro to be installed",
+            caching_method="periodic",
+            hyperparams=hyperparams,
         )
 
-        return (patched,)
+        return (model_patcher,)
 
 
 class CacheModelAuto(CacheModelMixin):
     @classmethod
     def INPUT_TYPES(cls):
         return {
-            "required": {"model": ("MODEL",)},
-            "optional": {
+            "required": {
+                "model": ("MODEL",),
+                "compiler": (
+                    "STRING",
+                    {
+                        "default": "torch_compile",
+                        "options": ["torch_compile", "none"],
+                    },
+                ),
                 "speed_factor": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0}),
                 "cache_mode": (
                     "STRING",
                     {"default": "default", "options": ["default", "taylor"]},
                 ),
-            },
+            }
         }
 
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "apply_caching"
     CATEGORY = "Pruna"
 
-    def apply_caching(self, model, speed_factor, cache_mode):
-        config_params = {
+    def apply_caching(self, model, compiler, speed_factor, cache_mode):
+        hyperparams = {
             "auto_speed_factor": speed_factor,
             "auto_cache_mode": cache_mode,
         }
-        patched = self._apply_common_caching(
+        if compiler != "none":
+            hyperparams["compiler"] = compiler
+        model_patcher = self._apply_common_caching(
             model,
-            caching_type="auto",
-            config_params=config_params,
-            error_message="Auto caching requires pruna_pro to be installed",
+            caching_method="auto",
+            hyperparams=hyperparams,
         )
-        return (patched,)
+        return (model_patcher,)
