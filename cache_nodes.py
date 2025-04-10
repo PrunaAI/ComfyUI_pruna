@@ -42,11 +42,14 @@ class CacheModelMixin:
         for key, value in config_params.items():
             smash_config[key] = value
 
+        # add an attribute to patched to pass the info that it is a comfy model
+        patched.model.diffusion_model.is_comfy = True
+
         # "Smash" the model and update the internal reference
-        smashed_diffusion_model = smash(patched.model.diffusion_model, smash_config)
+        smashed_model = smash(patched.model.diffusion_model, smash_config)
         model_ref_name = "_PrunaProModel__internal_model_ref"
         patched.add_object_patch(
-            "diffusion_model", smashed_diffusion_model.__getattribute__(model_ref_name)
+            "diffusion_model", smashed_model.__getattribute__(model_ref_name)
         )
 
         return patched
