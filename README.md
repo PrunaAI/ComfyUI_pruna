@@ -1,10 +1,13 @@
 # Pruna nodes for ComfyUI
 
-This repository explains how to accelerate image generation in ComfyUI using **Pruna**, an inference optimization engine that makes AI models **faster, smaller, cheaper, and greener**. ComfyUI is a popular node-based GUI for image generation models, for which we provide two custom nodes:
-- a **compilation node**, that optimizes inference speed through model compilation, without compromising output quality.
-- a **caching node** that smartly reuses intermediate computations to accelerate inference with minimal quality degradation.
+This repository explains how to accelerate image generation in ComfyUI using **Pruna**, an inference optimization engine that makes AI models **faster, smaller, cheaper, and greener**. ComfyUI is a popular node-based GUI for image generation models, for which we provide the following nodes:
+- a **compilation node**, that optimizes inference speed through model compilation. This does not compromise output quality at all, but it doesn't provide huge speedups.
+- **caching nodes** that smartly reuse intermediate computations to accelerate inference with minimal quality degradation. In particular, we provide three caching nodes, which use different caching strategies:
+    - [Adaptive Caching](https://docs.pruna.ai/en/stable/compression.html#adaptive-pro)
+    - [Periodic Caching](https://docs.pruna.ai/en/stable/compression.html#periodic-pro)
+    - [Auto Caching](https://docs.pruna.ai/en/stable/compression.html#auto-pro)
 
-Both of them can be applied to **Stable Diffusion (SD)** and **Flux** models. 
+All of them can be applied to **Stable Diffusion (SD)** and **Flux** models. 
 
 
 Here, you'll find:
@@ -17,15 +20,15 @@ Here, you'll find:
 ### Prerequisites
 1. Create a conda environment
 2. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI/?tab=readme-ov-file#installing)
-3. Install [Pruna or Pruna Pro](https://docs.pruna.ai/en/stable/setup/pip.html) version `0.2.0`.
+3. Install the latest version of [Pruna or Pruna Pro](https://docs.pruna.ai/en/stable/setup/pip.html): 
 
 - To install **Pruna**:
   ```bash
-  pip install pruna==0.2.0
+  pip install pruna==0.2.2
   ```
 - To install **Pruna Pro**:
   ```bash
-  pip install pruna_pro==0.2.0
+  pip install pruna_pro==0.2.2
   ```
 
 **To use Pruna Pro**, you also need to: 
@@ -33,9 +36,9 @@ Here, you'll find:
 ```bash
 export PRUNA_TOKEN=<your_token_here>
 ```
-2. [*Optional*] If you want to use the `x-fast` compiler, you need to install additional dependencies:
+2. [*Optional*] If you want to use the `x-fast` or `stable-fast` compilers, you need to install additional dependencies:
 ```bash
-pip install pruna[stable-fast]==0.2.0
+pip install pruna[stable-fast]==0.2.2
 ``` 
 
 
@@ -55,9 +58,9 @@ git clone https://github.com/PrunaAI/ComfyUI_pruna.git
 cd <path_to_comfyui> && python main.py --disable-cuda-malloc --gpu-only
 ```
 
-The Pruna node will appear in the nodes menu in the `Pruna` category. 
+The Pruna nodes will appear in the nodes menu in the `Pruna` category. 
 
-**Important note**: The compilation node requires launching ComfyUI with the `--disable-cuda-malloc` flag; 
+**Important note**: To use compilation (either in the `Pruna compile` node or in the caching nodes), you need to launch ComfyUI with the `--disable-cuda-malloc` flag; 
 otherwise the node may not function properly. For optimal performance, we also recommend setting the 
 `--gpu-only` flag. 
 
@@ -68,11 +71,13 @@ otherwise the node may not function properly. For optimal performance, we also r
 We provide two types of workflows: one using a [Stable Diffusion](#example-1-stable-diffusion) model and another based on [Flux](#example-2-flux). 
 To these models, we apply caching, compilation or their combination. 
 
-| Optimization Technique                     | Stable Diffusion | Flux |
+| Node                     | Stable Diffusion | Flux |
 |--------------------------|-----------------|------|
 | **Compilation**          | [SD Compilation](./workflows/SD_compile.json) ([Preview](./images/SD_compile.png)) | [Flux Compilation](./workflows/flux_compile.json) ([Preview](./images/flux_compile.png)) |
-| **Caching**              | [SD Caching](./workflows/SD_caching.json) ([Preview](./images/SD_caching.png)) | [Flux Caching](./workflows/flux_caching.json) ([Preview](./images/flux_caching.png)) |
-| **Caching + Compilation** | [SD Caching + Compilation](./workflows/SD_compile+caching.json) ([Preview](./images/SD_compile+caching.png)) | [Flux Caching + Compilation](./workflows/flux_compile+caching.json) ([Preview](./images/flux_compile+caching.png)) |
+| **Adaptive Caching**      | [SD Adaptive Caching](./workflows/SD_adaptive_caching.json) ([Preview](./images/SD_adaptive_caching.png)) | [Flux Adaptive Caching](./workflows/flux_adaptive_caching.json) ([Preview](./images/flux_adaptive_caching.png)) |
+| **Periodic Caching**      | [SD Periodic Caching](./workflows/SD_periodic_caching.json) ([Preview](./images/SD_periodic_caching.png)) | [Flux Periodic Caching](./workflows/flux_periodic_caching.json) ([Preview](./images/flux_periodic_caching.png)) |
+| **Auto Caching**          | [SD Auto Caching](./workflows/SD_auto_caching.json) ([Preview](./images/SD_auto_caching.png)) | [Flux Auto Caching](./workflows/flux_auto_caching.json) ([Preview](./images/flux_auto_caching.png)) |
+
 
 
 To load the  workflow:
@@ -122,15 +127,29 @@ Now, just load the [workflow](#workflows) and you're ready to go!
 
 ### Hyperparameters
 
-Through the GUI, you can configure various **optimization settings**. Specifically:
+Through the GUI, you can configure various **optimization settings** for the compilation and caching nodes.
 
-- **Compilation**: We currently support two compilation modes: `x_fast` and `torch_compile`, with `x_fast` set as the default.
-- **Caching**: Our caching mechanism supports the `adaptive` algorithm, which allows you to adjust the `threshold` and `max_skip_steps` parameters:
-  - **`threshold`**: Acceptable values range from `0.001` to `0.2`.  
-  - **`max_skip_steps`**: Acceptable values range from `1` to `5`.  
+#### Compilation node
 
-  We recommend using the default values (`threshold = 0.01`, `max_skip_steps = 4`), but you can experiment with different settings to balance speed and quality. In general, increasing the threshold results in more aggressive caching, which may improve performance at the expense of image quality. Note that, if you want to change the parameters of the nodes after the first execution, you have to restart the workflow.
+We currently support two compilation modes: `x_fast` and `torch_compile`, with `x_fast` set as the default.
 
+#### Caching nodes
+
+We offer three caching nodes, which use different caching strategies. For more details on the caching algorithms, see the [Pruna documentation](https://docs.pruna.ai/en/stable/compression.html#adaptive-pro). Below, we summarize the hyperparameters for each node. Note that in each node, you can also specify the `compiler` parameter, which allows you to **apply compilation on top of the caching**. Available options are `torch_compile`, `stable_fast`, and `none`.
+
+- **Adaptive Caching**: This node uses the `adaptive` algorithm, which allows you to adjust the `threshold` and `max_skip_steps` parameters:
+  - **`threshold`**: How much the difference between the current and previous latent can be before caching. Higher is faster, but reduces quality. Acceptable values range from `0.001` to `0.2`. Default value: `0.01`. 
+  - **`max_skip_steps`**: How many steps are allowed to be skipped in a row. Higher is faster, but reduces quality. Acceptable values range from `1` to `5`. Default value: `4`. 
+  
+- **Periodic Caching**: This node uses the `periodic` algorithm, which allows you to adjust the `cache_interval`, `start_step`, `cache_mode`, and `compiler` parameters:
+  - **`cache_interval`**: How many model steps to skip in a row. Higher is faster, but reduces quality. Acceptable values range from `1` to `7`. Default value: `2`. 
+  - **`start_step`**: How many steps to wait before starting to cache. Acceptable values range from `0` to `10`. Default value: `2`. 
+  - **`cache_mode`**: Which caching mode to use, `default` or `taylor`. `Default` reuses previous steps, while `taylor` uses a Taylor expansion for more accurate approximation. 
+  
+- **Auto Caching**: This node uses the `auto` algorithm, which allows you to adjust the `speed_factor` and `cache_mode` parameters:
+  - **`speed_factor`**: Controls inference latency. Lower values yield faster inference but may compromise quality. Acceptable values range from `0.0` to `1.0`. Default value: `0.5`. 
+  - **`cache_mode`**: Which caching mode to use, `default` or `taylor`. `Default` reuses previous steps, while `taylor` uses a Taylor expansion for more accurate approximation. 
+  
 > **Note**: Caching and `x_fast` compilation require access to the Pruna Pro version.
 
 

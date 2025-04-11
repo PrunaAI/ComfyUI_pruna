@@ -20,16 +20,11 @@ class CacheModelMixin:
             return model.patcher.clone()
 
     def _apply_common_caching(self, model, caching_method, hyperparams):
-        """
-        Apply common caching steps:
-           - Clone the model patcher.
-           - Create a smash config and set the caching type.
-           - Update config with caching-specific parameters.
-           - Smash and patch the model.
-        """
+        """Apply a specific caching method to a model."""
+        # Clone the model patcher
         model_patcher = self._clone_patcher(model)
 
-        # Set up the smash configuration object
+        # Set up smash config
         smash_config = SmashConfig()
 
         try:
@@ -39,15 +34,15 @@ class CacheModelMixin:
                 f"{caching_method} caching requires pruna_pro to be installed"
             )
 
-        # Merge the given caching-specific parameters into the config
+        # Merge the hyperparameters into smash config
         for key, value in hyperparams.items():
             smash_config[key] = value
         smash_config._prepare_saving = False
 
-        # add an attribute to patched to pass the info that it is a comfy model
+        # Add an attribute to patched to pass the info that it is a comfy model
         model_patcher.model.diffusion_model.is_comfy = True
 
-        # "Smash" the model and update the internal reference
+        # Smash the model and update the internal reference
         smashed_model = smash(model_patcher.model.diffusion_model, smash_config)
         model_patcher.add_object_patch(
             "diffusion_model",
@@ -76,7 +71,7 @@ class CacheModelAdaptive(CacheModelMixin):
                     "STRING",
                     {
                         "default": "torch_compile",
-                        "options": ["torch_compile", "none"],
+                        "options": ["torch_compile", "stable_fast", "none"],
                     },
                 ),
             }
@@ -120,7 +115,7 @@ class CacheModelPeriodic(CacheModelMixin):
                     "STRING",
                     {
                         "default": "torch_compile",
-                        "options": ["torch_compile", "none"],
+                        "options": ["torch_compile", "stable_fast", "none"],
                     },
                 ),
             }
@@ -158,7 +153,7 @@ class CacheModelAuto(CacheModelMixin):
                     "STRING",
                     {
                         "default": "torch_compile",
-                        "options": ["torch_compile", "none"],
+                        "options": ["torch_compile", "stable_fast", "none"],
                     },
                 ),
                 "speed_factor": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0}),
