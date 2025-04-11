@@ -1,8 +1,8 @@
 {
   "id": "6047c590-295f-4174-9405-64f0270a0091",
   "revision": 0,
-  "last_node_id": 58,
-  "last_link_id": 195,
+  "last_node_id": 59,
+  "last_link_id": 198,
   "nodes": [
     {
       "id": 16,
@@ -221,7 +221,7 @@
         "ver": "0.3.27"
       },
       "widgets_values": [
-        649756247613682,
+        713909846929525,
         "randomize"
       ],
       "color": "#2a363b",
@@ -422,7 +422,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 195
+          "link": 198
         },
         {
           "name": "width",
@@ -676,7 +676,7 @@
           "type": "MODEL",
           "slot_index": 0,
           "links": [
-            194
+            197
           ]
         }
       ],
@@ -693,15 +693,15 @@
       "bgcolor": "#335"
     },
     {
-      "id": 58,
-      "type": "CompileModel",
+      "id": 59,
+      "type": "CacheModelPeriodic",
       "pos": [
-        -246.63931274414062,
-        969.9275512695312
+        -215.24588012695312,
+        1020.9423217773438
       ],
       "size": [
         315,
-        58
+        130
       ],
       "flags": {},
       "order": 9,
@@ -710,7 +710,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 194
+          "link": 197
         }
       ],
       "outputs": [
@@ -718,14 +718,17 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            195
+            198
           ]
         }
       ],
       "properties": {
-        "Node name for S&R": "CompileModel"
+        "Node name for S&R": "CacheModelPeriodic"
       },
       "widgets_values": [
+        2,
+        2,
+        "taylor",
         "torch_compile"
       ]
     }
@@ -868,16 +871,16 @@
       "LATENT"
     ],
     [
-      194,
+      197,
       12,
       0,
-      58,
+      59,
       0,
       "MODEL"
     ],
     [
-      195,
-      58,
+      198,
+      59,
       0,
       30,
       0,
