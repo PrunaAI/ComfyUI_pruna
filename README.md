@@ -135,7 +135,7 @@ We currently support two compilation modes: `x_fast` and `torch_compile`, with `
 
 #### Caching nodes
 
-We offer three caching nodes, which use different caching strategies. For more details on the caching algorithms, see the [Pruna documentation](https://docs.pruna.ai/en/stable/compression.html#adaptive-pro). Below, we summarize the hyperparameters for each node. Note that in each node, you can also specify the `compiler` parameter, which allows you to **apply compilation on top of the caching**. Available options are `torch_compile`, `stable_fast`, and `none`.
+We offer three caching nodes, which use different caching strategies. For more details on the caching algorithms, see the [Pruna documentation](https://docs.pruna.ai/en/stable/compression.html#adaptive-pro). Below, we summarize the hyperparameters for each node. Note that in each node, you can also specify the `compiler` parameter, which allows you to **apply compilation on top of caching**. Available options are `torch_compile`, `stable_fast`, and `none`.
 
 - **Adaptive Caching**: This node uses the `adaptive` algorithm, which allows you to adjust the `threshold` and `max_skip_steps` parameters:
   - **`threshold`**: How much the difference between the current and previous latent can be before caching. Higher is faster, but reduces quality. Acceptable values range from `0.001` to `0.2`. Default value: `0.01`. 
