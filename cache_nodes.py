@@ -67,6 +67,10 @@ class CacheModelAdaptive(CacheModelMixin):
                     "INT",
                     {"default": 4, "step": 1, "min": 1, "max": 5},
                 ),
+                "cache_mode": (
+                    "STRING",
+                    {"default": "default", "options": ["default", "taylor"]},
+                ),
                 "compiler": (
                     "STRING",
                     {
@@ -81,11 +85,12 @@ class CacheModelAdaptive(CacheModelMixin):
     FUNCTION = "apply_caching"
     CATEGORY = "Pruna"
 
-    def apply_caching(self, model, threshold, max_skip_steps, compiler):
+    def apply_caching(self, model, threshold, max_skip_steps, cache_mode, compiler):
         # Prepare caching-specific configuration
         hyperparams = {
             "adaptive_threshold": threshold,
             "adaptive_max_skip_steps": max_skip_steps,
+            "adaptive_cache_mode": cache_mode,
         }
         if compiler != "none":
             hyperparams["compiler"] = compiler
