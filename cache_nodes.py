@@ -75,7 +75,7 @@ class CacheModelAdaptive(CacheModelMixin):
                     "STRING",
                     {
                         "default": "torch_compile",
-                        "options": ["torch_compile", "stable_fast", "none"],
+                        "options": ["torch_compile", "none"],
                     },
                 ),
             }
@@ -120,7 +120,7 @@ class CacheModelPeriodic(CacheModelMixin):
                     "STRING",
                     {
                         "default": "torch_compile",
-                        "options": ["torch_compile", "stable_fast", "none"],
+                        "options": ["torch_compile", "none"],
                     },
                 ),
             }
@@ -154,17 +154,17 @@ class CacheModelAuto(CacheModelMixin):
         return {
             "required": {
                 "model": ("MODEL",),
-                "compiler": (
-                    "STRING",
-                    {
-                        "default": "torch_compile",
-                        "options": ["torch_compile", "stable_fast", "none"],
-                    },
-                ),
                 "speed_factor": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0}),
                 "cache_mode": (
                     "STRING",
                     {"default": "default", "options": ["default", "taylor"]},
+                ),
+                "compiler": (
+                    "STRING",
+                    {
+                        "default": "torch_compile",
+                        "options": ["torch_compile", "none"],
+                    },
                 ),
             }
         }

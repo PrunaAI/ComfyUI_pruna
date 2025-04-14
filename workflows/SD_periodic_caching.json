@@ -264,6 +264,33 @@
       ]
     },
     {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [
+        1015.525146484375,
+        382.4110107421875
+      ],
+      "size": [
+        426.3940124511719,
+        270
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
       "id": 24,
       "type": "CacheModelPeriodic",
       "pos": [
@@ -300,35 +327,7 @@
         2,
         2,
         "taylor",
-        "stable_fast"
-      ]
-    },
-    {
-      "id": 9,
-      "type": "SaveImage",
-      "pos": [
-        1015.525146484375,
-        382.4110107421875
-      ],
-      "size": [
-        426.3940124511719,
-        270
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 9
-        }
-      ],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "ComfyUI",
-        ""
+        "torch_compile"
       ]
     }
   ],
@@ -418,10 +417,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6115909044841599,
+      "scale": 0.9090909090909092,
       "offset": [
-        452.8433372769313,
-        433.2412085313574
+        485.16894381386174,
+        524.4177269177208
       ]
     }
   },

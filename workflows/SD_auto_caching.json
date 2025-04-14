@@ -145,8 +145,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "ComfyUI",
-        ""
+        "ComfyUI"
       ]
     },
     {
@@ -325,9 +324,9 @@
         "Node name for S&R": "CacheModelAuto"
       },
       "widgets_values": [
-        "stable_fast",
         0.5,
-        "taylor"
+        "taylor",
+        "torch_compile"
       ]
     }
   ],
@@ -417,10 +416,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6115909044841599,
+      "scale": 0.9090909090909092,
       "offset": [
-        438.92488847103454,
-        462.40238573827514
+        485.16894381386174,
+        524.4177269177208
       ]
     }
   },
