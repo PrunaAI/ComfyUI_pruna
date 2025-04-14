@@ -138,24 +138,36 @@ We currently support two compilation modes: `x_fast` and `torch_compile`, with `
 
 #### Caching nodes
 
-We offer three caching nodes, which use different caching strategies. For more details on the caching algorithms, see the [Pruna documentation](https://docs.pruna.ai/en/stable/compression.html#adaptive-pro). All caching nodes share two parameters: 
+We offer three caching nodes, each implementing a different caching strategy. For more details on the underlying algorithms, see the [Pruna documentation](https://docs.pruna.ai/en/stable/compression.html#adaptive-pro). 
 
-- **`compiler`**: Which compiler to apply on top of caching, `torch_compile` or `none`. 
-- **`cache_mode`**: Which caching mode to use, `default` or `taylor`. `Default` reuses previous steps, while `taylor` uses a Taylor expansion for more accurate approximation. 
 
-In the following, we summarize the node-specific parameters.
+Below, is a summary of the available parameters for each caching node. 
 
-- **Adaptive Caching**: This node uses the `adaptive` algorithm, which allows you to adjust the `threshold` and `max_skip_steps` parameters:
-  - **`threshold`**: How much the difference between the current and previous latent can be before caching. Higher is faster, but reduces quality. Acceptable values range from `0.001` to `0.2`. Default value: `0.01`. 
-  - **`max_skip_steps`**: How many steps are allowed to be skipped in a row. Higher is faster, but reduces quality. Acceptable values range from `1` to `5`. Default value: `4`. 
-  
-- **Periodic Caching**: This node uses the `periodic` algorithm, which allows you to adjust the `cache_interval` and `start_step` parameters:
-  - **`cache_interval`**: Specifies how often to compute and cache the model output. Acceptable values range from `1` to `7`. Default value: `2`. 
-  - **`start_step`**: How many steps to wait before starting to cache. Acceptable values range from `0` to `10`. Default value: `2`. 
-  
-- **Auto Caching**: This node uses the `auto` algorithm, which allows you to adjust the `speed_factor` parameter:
-  - **`speed_factor`**: Controls inference latency. Lower values yield faster inference but may compromise quality. Acceptable values range from `0.0` to `1.0`. Default value: `0.5`. 
-  
+**Common Parameters for All Caching Nodes:**
+
+| Parameter | Options | Description |
+|-----------|---------|-------------|
+| `compiler` | `torch_compile`, `none` | Compiler to apply on top of caching |
+| `cache_mode` | `default`, `taylor` | Caching mode (`default` reuses previous steps, `taylor` uses Taylor expansion for more accurate approximation) |
+
+**Node-Specific Parameters:**
+
+*Adaptive Caching:*
+| Parameter | Range | Default | Description |
+|-----------|--------|---------|-------------|
+| `threshold` | 0.001 - 0.2 | 0.01 | Difference threshold between current and previous latent before caching. Higher is faster but reduces quality |
+| `max_skip_steps` | 1 - 5 | 4 | Maximum consecutive steps that can be skipped. Higher is faster but reduces quality |
+
+*Periodic Caching:*
+| Parameter | Range | Default | Description |
+|-----------|--------|---------|-------------|
+| `cache_interval` | 1 - 7 | 2 | How often to compute and cache the model output |
+| `start_step` | 0 - 10 | 2 | Number of steps to wait before starting to cache |
+
+*Auto Caching:*
+| Parameter | Range | Default | Description |
+|-----------|--------|---------|-------------|
+| `speed_factor` | 0.0 - 1.0 | 0.5 | Controls inference latency. Lower values yield faster inference but may compromise quality | 
 > **Note**: Caching and `x_fast` compilation require access to the Pruna Pro version.
 
 
