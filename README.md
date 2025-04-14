@@ -6,6 +6,7 @@ This repository explains how to accelerate image generation in ComfyUI using **P
     - [Adaptive Caching](https://docs.pruna.ai/en/stable/compression.html#adaptive-pro): Dynamically adjusts caching for each prompt by identifying the optimal inference steps to reuse cached outputs.
     - [Periodic Caching](https://docs.pruna.ai/en/stable/compression.html#periodic-pro): Caches model outputs at fixed intervals, reusing them in subsequent steps to reduce computation.
     - [Auto Caching](https://docs.pruna.ai/en/stable/compression.html#auto-pro): Automatically determines the optimal caching schedule to achieve a target latency reduction with minimal quality trade-off.
+  
   By adjusting the hyperparameters of these nodes, you can achieve the best trade-off between speed and output quality for your specific use case.
 
 Our nodes support both **Stable Diffusion (SD)** and **Flux** models. 
