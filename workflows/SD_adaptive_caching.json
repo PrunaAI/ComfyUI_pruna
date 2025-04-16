@@ -1,8 +1,8 @@
 {
   "id": "8d216b06-473d-44c1-a8f2-5bdfc42b4e7d",
   "revision": 0,
-  "last_node_id": 22,
-  "last_link_id": 54,
+  "last_node_id": 25,
+  "last_link_id": 65,
   "nodes": [
     {
       "id": 6,
@@ -122,33 +122,6 @@
       "widgets_values": []
     },
     {
-      "id": 9,
-      "type": "SaveImage",
-      "pos": [
-        1015.525146484375,
-        382.4110107421875
-      ],
-      "size": [
-        426.3940124511719,
-        58
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 9
-        }
-      ],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "ComfyUI"
-      ]
-    },
-    {
       "id": 5,
       "type": "EmptyLatentImage",
       "pos": [
@@ -200,7 +173,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 54
+          "link": 65
         },
         {
           "name": "positive",
@@ -232,13 +205,40 @@
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        1027409014658173,
+        902373184393269,
         "randomize",
         50,
         8,
         "euler",
         "normal",
         1
+      ]
+    },
+    {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [
+        1015.525146484375,
+        382.4110107421875
+      ],
+      "size": [
+        426.3940124511719,
+        270
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "ComfyUI"
       ]
     },
     {
@@ -262,7 +262,7 @@
           "type": "MODEL",
           "slot_index": 0,
           "links": [
-            53
+            64
           ]
         },
         {
@@ -291,15 +291,15 @@
       ]
     },
     {
-      "id": 22,
-      "type": "CompileModel",
+      "id": 25,
+      "type": "CacheModelAdaptive",
       "pos": [
-        145.77980041503906,
-        -126.22994232177734
+        122.70491027832031,
+        -97.0687484741211
       ],
       "size": [
         315,
-        58
+        130
       ],
       "flags": {},
       "order": 2,
@@ -308,7 +308,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 53
+          "link": 64
         }
       ],
       "outputs": [
@@ -316,15 +316,18 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            54
+            65
           ]
         }
       ],
       "properties": {
-        "Node name for S&R": "CompileModel"
+        "Node name for S&R": "CacheModelAdaptive"
       },
       "widgets_values": [
-        "x_fast"
+        0.01,
+        4,
+        "taylor",
+        "torch_compile"
       ]
     }
   ],
@@ -394,16 +397,16 @@
       "VAE"
     ],
     [
-      53,
+      64,
       18,
       0,
-      22,
+      25,
       0,
       "MODEL"
     ],
     [
-      54,
-      22,
+      65,
+      25,
       0,
       3,
       0,
@@ -414,10 +417,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6115909044841599,
+      "scale": 0.9090909090909092,
       "offset": [
-        438.92488847103454,
-        462.40238573827514
+        523.6689438138619,
+        389.1177269177205
       ]
     }
   },

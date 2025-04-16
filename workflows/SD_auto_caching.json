@@ -1,6 +1,8 @@
 {
-  "last_node_id": 21,
-  "last_link_id": 51,
+  "id": "8d216b06-473d-44c1-a8f2-5bdfc42b4e7d",
+  "revision": 0,
+  "last_node_id": 23,
+  "last_link_id": 60,
   "nodes": [
     {
       "id": 6,
@@ -27,10 +29,10 @@
         {
           "name": "CONDITIONING",
           "type": "CONDITIONING",
+          "slot_index": 0,
           "links": [
             4
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
@@ -65,10 +67,10 @@
         {
           "name": "CONDITIONING",
           "type": "CONDITIONING",
+          "slot_index": 0,
           "links": [
             6
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
@@ -108,10 +110,10 @@
         {
           "name": "IMAGE",
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             9
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
@@ -128,7 +130,7 @@
       ],
       "size": [
         426.3940124511719,
-        58
+        270
       ],
       "flags": {},
       "order": 7,
@@ -165,10 +167,10 @@
         {
           "name": "LATENT",
           "type": "LATENT",
+          "slot_index": 0,
           "links": [
             2
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
@@ -198,7 +200,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 51
+          "link": 60
         },
         {
           "name": "positive",
@@ -220,17 +222,17 @@
         {
           "name": "LATENT",
           "type": "LATENT",
+          "slot_index": 0,
           "links": [
             7
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        505768549495255,
+        475783314187168,
         "randomize",
         50,
         8,
@@ -258,27 +260,27 @@
         {
           "name": "MODEL",
           "type": "MODEL",
+          "slot_index": 0,
           "links": [
-            50
-          ],
-          "slot_index": 0
+            59
+          ]
         },
         {
           "name": "CLIP",
           "type": "CLIP",
+          "slot_index": 1,
           "links": [
             40,
             41
-          ],
-          "slot_index": 1
+          ]
         },
         {
           "name": "VAE",
           "type": "VAE",
+          "slot_index": 2,
           "links": [
             42
-          ],
-          "slot_index": 2
+          ]
         }
       ],
       "properties": {
@@ -289,15 +291,15 @@
       ]
     },
     {
-      "id": 21,
-      "type": "CacheModel",
+      "id": 23,
+      "type": "CacheModelAuto",
       "pos": [
-        131.9959716796875,
-        10.386188507080078
+        173.2490997314453,
+        -185.09280395507812
       ],
       "size": [
         315,
-        82
+        106
       ],
       "flags": {},
       "order": 2,
@@ -306,7 +308,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 50
+          "link": 59
         }
       ],
       "outputs": [
@@ -314,17 +316,17 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            51
-          ],
-          "slot_index": 0
+            60
+          ]
         }
       ],
       "properties": {
-        "Node name for S&R": "CacheModel"
+        "Node name for S&R": "CacheModelAuto"
       },
       "widgets_values": [
-        0.01,
-        4
+        0.5,
+        "taylor",
+        "torch_compile"
       ]
     }
   ],
@@ -394,16 +396,16 @@
       "VAE"
     ],
     [
-      50,
+      59,
       18,
       0,
-      21,
+      23,
       0,
       "MODEL"
     ],
     [
-      51,
-      21,
+      60,
+      23,
       0,
       3,
       0,
@@ -414,10 +416,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.7513148009015786,
+      "scale": 0.9090909090909092,
       "offset": [
-        733.5545803378577,
-        454.0478145107456
+        485.16894381386174,
+        524.4177269177208
       ]
     }
   },
