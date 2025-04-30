@@ -40,7 +40,7 @@ Currently, running our nodes requires a **Linux system with a GPU**. To setup yo
 ```bash
 export PRUNA_TOKEN=<your_token_here>
 ```
-2. [*Optional*] If you want to use the the `x-fast` compiler, you need to install additional dependencies:
+2. [*Optional*] If you want to use the the `x-fast` or `stable-fast` compiler, you need to install additional dependencies:
 ```bash
 pip install pruna[stable-fast]==0.2.2
 ``` 

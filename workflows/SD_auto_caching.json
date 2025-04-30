@@ -326,7 +326,7 @@
       "widgets_values": [
         0.5,
         "taylor",
-        "torch_compile"
+        "stable_fast"
       ]
     }
   ],

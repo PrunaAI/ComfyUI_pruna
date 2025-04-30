@@ -327,7 +327,7 @@
         0.01,
         4,
         "taylor",
-        "torch_compile"
+        "stable_fast"
       ]
     }
   ],
