@@ -13,7 +13,7 @@ except ImportError:
         print("Neither pruna_pro nor pruna are installed, skipping")
 
 
-class CompileModel:
+class PrunaCompileModel:
     @classmethod
     def INPUT_TYPES(s):
         return {

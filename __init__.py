@@ -8,17 +8,17 @@ NODE_DISPLAY_NAME_MAPPINGS = {}
 
 try:
     from .cache_nodes import CacheModelAdaptive, CacheModelAuto, CacheModelPeriodic
-    from .compile_node import CompileModel
+    from .compile_node import PrunaCompileModel
 
     PRUNA_NODE_CLASS_MAPPINGS = {
-        "CompileModel": CompileModel,
+        "PrunaCompileModel": PrunaCompileModel,
         "CacheModelAdaptive": CacheModelAdaptive,
         "CacheModelPeriodic": CacheModelPeriodic,
         "CacheModelAuto": CacheModelAuto,
     }
 
     PRUNA_NODE_DISPLAY_NAME_MAPPINGS = {
-        "CompileModel": "Pruna Compile",
+        "PrunaCompileModel": "Pruna Compile",
         "CacheModelAdaptive": "Pruna Cache Adaptive",
         "CacheModelPeriodic": "Pruna Cache Periodic",
         "CacheModelAuto": "Pruna Cache Auto",
