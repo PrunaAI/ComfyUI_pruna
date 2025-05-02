@@ -28,11 +28,11 @@ Currently, running our nodes requires a **Linux system with a GPU**. To setup yo
 
 - To install **Pruna**:
   ```bash
-  pip install pruna==0.2.2
+  pip install pruna==0.2.3
   ```
 - To install **Pruna Pro**:
   ```bash
-  pip install pruna_pro==0.2.2.post2
+  pip install pruna_pro==0.2.3
   ```
 
 **To use Pruna Pro**, you also need to: 
@@ -40,9 +40,9 @@ Currently, running our nodes requires a **Linux system with a GPU**. To setup yo
 ```bash
 export PRUNA_TOKEN=<your_token_here>
 ```
-2. [*Optional*] If you want to use the the `x-fast` compiler, you need to install additional dependencies:
+2. [*Optional*] If you want to use the the `x-fast` or `stable-fast` compiler, you need to install additional dependencies:
 ```bash
-pip install pruna[stable-fast]==0.2.2
+pip install pruna[stable-fast]==0.2.3
 ``` 
 
 
@@ -147,7 +147,7 @@ Below, is a summary of the available parameters for each caching node.
 
 | Parameter | Options | Description |
 |-----------|---------|-------------|
-| `compiler` | `torch_compile`, `none` | Compiler to apply on top of caching |
+| `compiler` | `torch_compile`, `none`, `stable_fast` | Compiler to apply on top of caching |
 | `cache_mode` | `default`, `taylor` | Caching mode (`default` reuses previous steps, `taylor` uses Taylor expansion for more accurate approximation) |
 
 **Node-Specific Parameters:**
@@ -190,9 +190,10 @@ using 28 steps. We compare the iterations per second (as reported by `ComfyUI`) 
 ![Performance](./images/its_comparison_28.png)
 ![Performance](./images/end2end_time_comparison_28.png)
 
-**Hyperparameters**: For caching, we used the `taylor` mode and the `torch_compile` compiler, along with the default hyperparameters. 
+**Hyperparameters**:  For caching, we used the `taylor` mode. The compiler was set to `torch_compile` for Flux and `stable_fast` for SD. All other hyperparameters remained at their default values, with one exception: for SD with 28 denoising steps, we set the threshold to 0.02 in the adaptive caching node.
 
-Note that for Stable Diffusion models, `x_fast` typically delivers better performance than `torch_compile`, whereas for Flux models, `torch_compile` tends to outperform `x_fast`. 
+
+
 
 
 ## Contact
