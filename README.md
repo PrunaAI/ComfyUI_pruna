@@ -183,9 +183,9 @@ Using the recommended settings for `TeaCache` and `First Block Cache`, Auto Cach
 
 For a deeper dive into the experimental details, please have a look in our [blog post](https://www.pruna.ai/blog/faster-comfyui-nodes).
 
-![Performance](./images/benchmark_plot.png){: width="90%"}
+![Performance](./images/benchmark_plot.png)
 
-![Comparison](./images/benchmark_examples.png){: width="90%"}
+![Comparison](./images/benchmark_examples.png)
 
 ### Comparing Different Settings and Models
 
