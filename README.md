@@ -174,23 +174,41 @@ Below, is a summary of the available parameters for each caching node.
 
 ## Performance
 
+
+### Comparing Against Other Nodes: Efficiency and Quality Benchmarks
+
+Pruna’s Auto Caching in Taylor mode was benchmarked against the Flux dev model, TeaCache, and First Block Cache using 65 PartiPrompts inputs on an NVIDIA L40S GPU (each prompt generating a single 1024×1024 image with 50 denoising steps). We measured end-to-end latency, relative speedup, energy consumption (via CodeCarbon), CO₂ emissions, and image-quality scores. Compilation with `torch_compile` was applied on top of all caching algorithms. 
+
+Using the recommended settings for `TeaCache` and `First Block Cache`, Auto Caching at `speed_factor = 0.4` delivers the same speedup as TeaCache, and at 0.3 rivals First Block Cache. However, in both cases Pruna maintains superior quality metrics. You can go even faster (up to a 5.6× boost at 0.2), but you should always have a look if the quality degradation is acceptable for your use case.
+
+For a deeper dive into the experimental details, please have a look in our [blog post](https://www.pruna.ai/blog/faster-comfyui-nodes).
+
+![Performance](./images/benchmark_plot.png){: width="90%"}
+
+![Comparison](./images/benchmark_examples.png){: width="90%"}
+
+### Comparing Different Settings and Models
+
 The node was tested on an NVIDIA L40S GPU. Below, we compare the performance of the base model, with the models 
 optimized with Pruna's compilation and caching nodes. We run two types of experiments: one using 50 denoising steps and another 
 using 28 steps. We compare the iterations per second (as reported by `ComfyUI`) and the end-to-end time required to generate a single image.
 
 
-### 50 steps 
+#### 50 steps 
 
 ![Performance](./images/its_comparison_50.png)
 ![Performance](./images/end2end_time_comparison_50.png)
 
 
-### 28 steps 
+#### 28 steps 
 
 ![Performance](./images/its_comparison_28.png)
 ![Performance](./images/end2end_time_comparison_28.png)
 
 **Hyperparameters**:  For caching, we used the `taylor` mode. The compiler was set to `torch_compile` for Flux and `stable_fast` for SD. All other hyperparameters remained at their default values, with one exception: for SD with 28 denoising steps, we set the threshold to 0.02 in the adaptive caching node.
+
+
+
 
 
 
