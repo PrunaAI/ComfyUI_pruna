@@ -177,8 +177,7 @@ Below, is a summary of the available parameters for each caching node.
 
 ### Comparing Against Other Nodes: Efficiency and Quality Benchmarks
 
-Pruna’s Auto Caching in Taylor mode was benchmarked for the Flux dev model against two well-known cachine techniques: `TeaCache` and `First Block Cache`. 
-We generated a single 1024×1024 image with 50 denoising steps for each prompt. We measured end-to-end latency, relative speedup, energy consumption (via CodeCarbon), CO₂ emissions, and image-quality scores. Compilation with `torch_compile` was applied on top of all caching algorithms. All the experiments were run on an NVIDIA L40S GPU.
+Pruna’s Auto Caching in Taylor mode was benchmarked against the Flux dev model and two well-known cachine techniques: `TeaCache` and `First Block Cache`. We generated a single 1024×1024 image with 50 denoising steps for a diverse set of 65 prompts from the PartiPrompts dataset. We measured end-to-end latency, relative speedup, energy consumption (via CodeCarbon), CO₂ emissions, and image-quality scores. Compilation with `torch_compile` was applied on top of all caching algorithms. All the experiments were run on an NVIDIA L40S GPU.
 
 Using the recommended settings for `TeaCache` and `First Block Cache`, Auto Caching at `speed_factor = 0.4` delivers the same speedup as TeaCache, and at 0.3 rivals First Block Cache. However, in both cases Pruna maintains superior quality metrics. You can go even faster (up to a 5.6× boost at 0.2), but you should always have a look if the quality degradation is acceptable for your use case.
 
