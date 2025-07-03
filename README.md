@@ -28,11 +28,11 @@ Currently, running our nodes requires a **Linux system with a GPU**. To setup yo
 
 - To install **Pruna**:
   ```bash
-  pip install pruna==0.2.3
+  pip install pruna==0.2.6
   ```
 - To install **Pruna Pro**:
   ```bash
-  pip install pruna_pro==0.2.3
+  pip install pruna_pro==0.2.6
   ```
 
 **To use Pruna Pro**, you also need to: 
@@ -42,7 +42,7 @@ export PRUNA_TOKEN=<your_token_here>
 ```
 2. [*Optional*] If you want to use the the `x-fast` or `stable-fast` compiler, you need to install additional dependencies:
 ```bash
-pip install pruna[stable-fast]==0.2.3
+pip install pruna[stable-fast]==0.2.6
 ``` 
 
 
@@ -148,7 +148,7 @@ Below, is a summary of the available parameters for each caching node.
 | Parameter | Options | Description |
 |-----------|---------|-------------|
 | `compiler` | `torch_compile`, `none`, `stable_fast` | Compiler to apply on top of caching |
-| `cache_mode` | `default`, `taylor` | Caching mode (`default` reuses previous steps, `taylor` uses Taylor expansion for more accurate approximation) |
+| `cache_mode` | `default`, `taylor`, `ab`, `bdf` | Caching mode. The `default` mode simply reuses previous steps, while `taylor` uses Taylor expansion for more accurate approximation. `ab` and `bdf` use the Adams-Bashforth and Backward Differentiation Formula, respectively, to approximate the model output. |
 
 **Node-Specific Parameters:**
 
