@@ -148,7 +148,7 @@ Below, is a summary of the available parameters for each caching node.
 | Parameter | Options | Description |
 |-----------|---------|-------------|
 | `compiler` | `torch_compile`, `none`, `stable_fast` | Compiler to apply on top of caching |
-| `cache_mode` | `default`, `taylor`, `ab`, `bdf` | Caching mode. The `default` mode follows a simple caching strategy, while `taylor` uses Taylor expansion for more accurate approximation. `ab` and `bdf` use the Adams-Bashforth and Backward Differentiation Formula, respectively, to approximate the model output. |
+| `cache_mode` | `default`, `taylor`, `ab`, `bdf` | Caching mode. The `default` mode simply reuses previous steps, while `taylor` uses Taylor expansion for more accurate approximation. `ab` and `bdf` use the Adams-Bashforth and Backward Differentiation Formula, respectively, to approximate the model output. |
 
 **Node-Specific Parameters:**
 
