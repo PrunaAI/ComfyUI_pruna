@@ -28,7 +28,7 @@ class CacheModelMixin:
         smash_config = SmashConfig()
 
         try:
-            smash_config["cachers"] = caching_method
+            smash_config["cacher"] = caching_method
         except KeyError:
             raise ValueError(
                 f"{caching_method} caching requires pruna_pro to be installed"
@@ -69,7 +69,10 @@ class CacheModelAdaptive(CacheModelMixin):
                 ),
                 "cache_mode": (
                     "STRING",
-                    {"default": "default", "options": ["default", "taylor"]},
+                    {
+                        "default": "default",
+                        "options": ["default", "taylor", "ab", "bdf"],
+                    },
                 ),
                 "compiler": (
                     "STRING",
@@ -114,7 +117,10 @@ class CacheModelPeriodic(CacheModelMixin):
                 "start_step": ("INT", {"default": 2, "min": 0, "max": 10}),
                 "cache_mode": (
                     "STRING",
-                    {"default": "default", "options": ["default", "taylor"]},
+                    {
+                        "default": "default",
+                        "options": ["default", "taylor", "ab", "bdf"],
+                    },
                 ),
                 "compiler": (
                     "STRING",
@@ -157,7 +163,10 @@ class CacheModelAuto(CacheModelMixin):
                 "speed_factor": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0}),
                 "cache_mode": (
                     "STRING",
-                    {"default": "default", "options": ["default", "taylor"]},
+                    {
+                        "default": "default",
+                        "options": ["default", "taylor", "ab", "bdf"],
+                    },
                 ),
                 "compiler": (
                     "STRING",
