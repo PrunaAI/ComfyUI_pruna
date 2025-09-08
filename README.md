@@ -1,3 +1,5 @@
+# ⚠️ This repository is no longer maintained
+
 # Pruna nodes for ComfyUI
 
 This repository explains how to accelerate image generation in ComfyUI using **Pruna**, an inference optimization engine that makes AI models **faster, smaller, cheaper, and greener**. ComfyUI is a popular node-based GUI for image generation models, for which we provide the following nodes:
