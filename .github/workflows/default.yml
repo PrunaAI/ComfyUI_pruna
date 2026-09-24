@@ -18,3 +18,7 @@ jobs:
           python-version: "3.12"
       - name: Syntax check
         run: python -m compileall -q .
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+      - name: Resolve pinned dependencies
+        run: |
+          uv pip compile pyproject.toml --python-version 3.12 --python-platform x86_64-manylinux_2_28 -q > /dev/null
