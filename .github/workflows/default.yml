@@ -1,0 +1,50 @@
+name: default
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  default:
+    name: default
+    runs-on: ubuntu-latest
+    env:
+      # git pathspecs for the Python manifests to resolve, and pathspecs to skip
+      MANIFESTS: "*requirements*.txt *pyproject.toml"
+      EXCLUDE: ""
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+      - name: Syntax check
+        run: uv run --no-project --python 3.12 python -m compileall -q -x '/(\.venv|node_modules)/' .
+      - name: Resolve pinned dependencies
+        run: |
+          set -f
+          read -ra include <<< "$MANIFESTS"
+          read -ra skip <<< "$EXCLUDE"
+          git ls-files -- "${include[@]}" "${skip[@]/#/:!}" | while read -r f; do
+            echo "::group::$f"
+            (cd "$(dirname "$f")" && uv pip compile "$(basename "$f")" \
+              --python-version 3.12 --python-platform x86_64-manylinux_2_28 \
+              --extra-index-url https://download.pytorch.org/whl/cu128 --index-strategy unsafe-best-match \
+              -q -o "$RUNNER_TEMP/resolved.txt") || { echo "::error file=$f::dependencies do not resolve"; exit 1; }
+            echo "::endgroup::"
+          done
+
+  semgrep:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    container: semgrep/semgrep:1.178.0@sha256:32e459968daabe7ab86968184a29109b9564aa00392401156f9788452b42786b
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - name: Semgrep (only findings this pull request adds)
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          semgrep scan --config p/trailofbits --config p/default --severity ERROR --error --metrics off \
+            --baseline-commit "${{ github.event.pull_request.base.sha }}"
