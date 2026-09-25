@@ -34,3 +34,17 @@ jobs:
               -q -o /dev/null) || { echo "::error file=$f::dependencies do not resolve"; exit 1; }
             echo "::endgroup::"
           done
+
+  semgrep:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    container: semgrep/semgrep:1.178.0@sha256:32e459968daabe7ab86968184a29109b9564aa00392401156f9788452b42786b
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - name: Semgrep (only findings this pull request adds)
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          semgrep scan --config p/trailofbits --config p/default --severity ERROR --error --metrics off \
+            --baseline-commit "${{ github.event.pull_request.base.sha }}"
