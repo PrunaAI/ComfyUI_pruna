@@ -9,7 +9,7 @@ updates:
       minor-and-patch:
         patterns: ["*"]
         update-types: [minor, patch]
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 50
   - package-ecosystem: github-actions
     directories:
       - "/"
@@ -19,4 +19,4 @@ updates:
       minor-and-patch:
         patterns: ["*"]
         update-types: [minor, patch]
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 50
