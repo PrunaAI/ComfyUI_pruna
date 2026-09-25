@@ -31,7 +31,7 @@ jobs:
             (cd "$(dirname "$f")" && uv pip compile "$(basename "$f")" \
               --python-version 3.12 --python-platform x86_64-manylinux_2_28 \
               --extra-index-url https://download.pytorch.org/whl/cu128 --index-strategy unsafe-best-match \
-              -q -o /dev/null) || { echo "::error file=$f::dependencies do not resolve"; exit 1; }
+              -q -o "$RUNNER_TEMP/resolved.txt") || { echo "::error file=$f::dependencies do not resolve"; exit 1; }
             echo "::endgroup::"
           done
 
