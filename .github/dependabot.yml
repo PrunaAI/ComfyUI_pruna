@@ -1,6 +1,8 @@
 version: 2
 updates:
   - package-ecosystem: pip
+    cooldown:
+      default-days: 7
     directories:
       - "/"
     schedule:
@@ -11,6 +13,8 @@ updates:
         update-types: [minor, patch]
     open-pull-requests-limit: 1000
   - package-ecosystem: github-actions
+    cooldown:
+      default-days: 7
     directories:
       - "/"
     schedule:
@@ -20,3 +24,10 @@ updates:
         patterns: ["*"]
         update-types: [minor, patch]
     open-pull-requests-limit: 1000
+  - package-ecosystem: docker
+    directories:
+      - "/.github/workflows"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
