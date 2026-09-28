@@ -24,10 +24,3 @@ updates:
         patterns: ["*"]
         update-types: [minor, patch]
     open-pull-requests-limit: 1000
-  - package-ecosystem: docker
-    directories:
-      - "/.github/workflows"
-    schedule:
-      interval: weekly
-    cooldown:
-      default-days: 7
