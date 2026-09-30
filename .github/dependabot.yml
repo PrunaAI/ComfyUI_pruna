@@ -11,7 +11,6 @@ updates:
       minor-and-patch:
         patterns: ["*"]
         update-types: [minor, patch]
-    open-pull-requests-limit: 50
   - package-ecosystem: github-actions
     cooldown:
       default-days: 7
@@ -23,4 +22,3 @@ updates:
       minor-and-patch:
         patterns: ["*"]
         update-types: [minor, patch]
-    open-pull-requests-limit: 50
